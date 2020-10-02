@@ -9,26 +9,16 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
+from decouple import config
 
 import os
 import environ
 
 env = environ.Env()
-# reading .env file
 environ.Env.read_env()
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*j52%8zj%l8%xzmw7y^9t4i@vyxef+x7@_38uuki!j)cmfd=to'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1','192.168.100.199','localhost','0.0.0.0']
 
@@ -86,11 +76,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+        'NAME': 'db_deploy',
+        'USER': 'wallyson',
+        'PASSWORD': '28327yzf',
+        'HOST': 'localhost',
+        'PORT': '5432',
         'OPTIONS' : {
             'options': '-c search_path=public'
         },
